@@ -1,7 +1,7 @@
 ## Exercise: Zipcode (20 Points)
 
-The objective of this project is to learn how to implement operators for C++ classes
-and use input and output streams.
+The objective of this project is to learn about constructors:
+how they're used, and how that are implemented.
 
 The first thing you will need to do is fork and clone this assignment
 from GitHub. Follow the instructions
@@ -13,61 +13,86 @@ the forked project when you clone it in CLion.
 
 ### Requirements of this project
 
-This project is based on the programming assignment #2 from Chapter 8. In 
-it you will create a class called Complex (in the namespace `edu::sbcc::cs140`)
-based on the mathematical understanding of the imaginary numbers. Imaginary numbers
-are made up of two components, a real part and an imaginary part. The imaginary
-part is a constant times the square root of -1.
+This project is based on the programming assignment #9 from Chapter 7. In 
+it you will create a class called Zipcode (in the namespace `edu::sbcc::cs140`)
+based on the POSTNET encoding of zipcodes as barcodes.
 
-This class has two constructors (or one with a default parameter). The first
-constructor takes two parameters, both of type `double`, representing the real
-and imaginary parts of a complex number respectively. The second takes a single
-`double` parameter representing the real part of an imaginary number (the 
-imaginary part is then 0).
+This class has two constructors, one that takes an integer, and one that takes a string.
+The constructor that takes an integer(specifically `uint32_t`) takes the integer to
+be a zipcode. For example, 93117. The constructor that takes a string takes the string
+to be a barcode representation of the zipcode, as described in the book.
 
-This class also has two accessor methods, getRealPart and getImaginaryPart, to
-return the individual components of the complex number. Be sure to use proper
-*constness* for these methods.
+In addition to the constructors, the Zipcode class should also include two methods, `getZipcode`
+, which returns the zipcode as an integer, and `getBarcode` which returns a string that represents
+the barcode, encoded using POSTNET, as described in the book. Neither function takes any input
+parameters. Be sure that these functions declare these methods with the proper *const-correctness*.
 
-Finally, this class defines several operators. Specifically you must implement +, -, 
-*, ==, !=, << and >>. You don't need to implement the = operator (do you understand
-why?). These operators should be external to the class, though still in the `edu.sbcc.cs140` 
-namespace, and also be declared as friend methods. Also, as in the original assignment
-you should declare a constant `i` within Complex that has the form `(0, 1)`.
+### Magic Numbers
 
-You are free to add any private helper methods you need, but are not required to do so.
+*Magic Numbers* are the use of raw literal constants in the code. The problem with these types of
+values is that they are not very readable, and are hard to change everywhere they are used. You
+can imagine that if you use the number 5 throughout the code and need to change it to 6, this change
+can be quite difficult. Which 5's do you change? All of them? Some of them? 
 
-For the << and >> methods see the formatting specification below to make sure you
-can pass all the unit test included with this project.
+Readability is another issue. What does the number 5 represent? Using well named constants addresses
+both of these issues. In this project, be sure to use constants to represent repeating literals 
+through out your code. For example, rather than writing the following code to convert the sum 11 to 0,
+as described in the write up for this assignment in the book:
 
-### << Formatting
+```cpp
+if (sum == 11) {
+  sum = 0;
+}
+```
 
-When outputting a Complex instance to a stream, the output should be of the form [[-]d[.d]][ {+,-} d[.d]]. 
-Below are a few examples of how Complex numbers should look after calling your `<<` operator 
-implementation:
+You could define a constant with in the `Zipcode` class that is more readable, and more easily changed
+if used in multiple places in the code.
 
-1. -1 + i
-2. 2.1 - 1.1i
-3. -1
-4. -i
+```cpp
+if (sum == ZERO_SUM) {
+  sum = 0;
+}
+```
 
-Notice in the first example that there is no space between the `-` and the `1` for the real
-term, but there is for the operator between the real and imaginary parts. Also notice that 
-when either the real or imaginary parts are zero, no term is added to the output. In the 
-fourth case, notice that there is not space between the `-` operator and the `i`.
+Now, in order to create this constant, you must declare it in the `.h` header file, and define it
+in the `.cc` file. For example, `zipcode.h` might have the following code:
 
-### >> Formatting
+```cpp
+class Zipcode {
+private:
+  static const uint8_t ZERO_SUM;
+  ... // The rest of the declaration follows
+}
+```
 
-The formatting for input is more flexible with regards to space. That being said, your 
-implementation of the `>>` operator should handle any of the formats above, with or without
-all the spaces. In addition, your code should be able to handle improperly formatted 
-input. By handle, I mean not crash and not update the real or imaginary parts unless the
-format is correct.
- 
+Then in `zipcode.cc` you would define its value, like this:
+
+```cpp
+const uint8_t Zipcode::ZERO_SUM = 11;
+```
+
+That code can go anywhere in the `.cc` file. 
+
+Do the same for other numeric constants, and strings. I will assign extra points for avoiding the
+use of magic numbers in your code for this assignment, and will begin to deduct points for using
+magic numbers in future code. 
+
+Notice in the above code, that I did not create a constant for zero in the code: 
+
+```cpp
+  sum = 0;
+```
+
+That's because 0, in this case, is not a magic number. A good rule of thumb is, that if you would
+name the constant the same as the value, then it's not a magic number. Therefore, in this case a good
+name for the the literal `0` is `ZERO`. In this case it's not necessary to define a constant. If 
+you're not sure, error on the side of creating a constant. I will not deduct points for using too
+many constants, but I will deduct points for using too few.
+
 ### Writing the code for this Project
 
 There are only three requirements for creating the code for this project correctly. One,
-be sure that you create a class named `Complex` in the namespace `edu::sbcc::cs140` with
+be sure that you create a class named `Zipcode` in the namespace `edu::sbcc::cs140` with
 the give interface from above. Two, you can put your implementation in a file with the 
 name of your choice as long as it uses the `.cc` extension, and is in the `src` directory.
 Three, you can put you class definition in a file with the name of your choice as long as 
@@ -81,7 +106,7 @@ Be sure to add the proper header comment to each `.cc` and `.h` file you add to 
 
 Testing the code for this project is similar to running your code
 as outlined above. In the drop-down menu in the upper right-hand
-corner select the configuration `ComplexNumbers_Gtest` and press the
+corner select the configuration `Zipcode_Gtest` and press the
 play button next to it. In the **Run** view below the code you should
 see the output of running these tests. It should look something
 like this:
