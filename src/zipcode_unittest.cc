@@ -51,6 +51,8 @@ namespace {
 
     using namespace ::testing_internal;
 
+    typedef uint64_t uint;
+
     class ZipcodeTest : public ::testing::Test {
     protected:
         static const uint MAX_TESTED_SCORE = 20;
@@ -113,7 +115,7 @@ namespace {
         EXPECT_EQ("111000110001100011000110001", allZeroesBc.getBarcode());
 
         if (!HasFailure()) {
-            _testScore += 2;
+            _testScore += 1;
         }
 
         // Extra credit if you can read the zipcode 00000 and produce the correct
@@ -123,7 +125,7 @@ namespace {
         ASSERT_EQ(0, allZeroes.getZipcode());
         ASSERT_EQ("111000110001100011000110001", allZeroes.getBarcode());
 
-        _testScore += 2;
+        _testScore += 1;
     }
 
     TEST_F(ZipcodeTest, EmptyBarcodeFormat) {
