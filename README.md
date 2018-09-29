@@ -101,6 +101,23 @@ Three, you can put you class definition in a file called, exactly, `zipcode.h`, 
 
 Be sure to add the proper header comment to each `.cc` and `.h` file you add to this project.
 
+### Running the code for this project
+
+Running this code should be straightforward. In the drop-down 
+menu in the upper right-hand corner you should see a *Run
+Configuration* called `Zipcode | Debug`. Make sure this 
+configuration is selected and press the play button next to it.
+In the **Run** view below the code you should see the output 
+of running the program. It should look something like this:
+
+```bash
+93103
+110100001100001111000001101
+
+Process finished with exit code 0
+```
+Success! Now you can move on to testing your code.
+
 ### Testing the code for this project
 
 Testing the code for this project is similar to running your code
