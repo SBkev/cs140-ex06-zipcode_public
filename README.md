@@ -5,7 +5,7 @@ how they're used, and how that are implemented.
 
 The first thing you will need to do is fork and clone this assignment
 from GitHub. Follow the instructions
-[here](https://github.com/sbcc-cs140-fall2018/HowToStartEveryProject)
+[here](https://github.com/sbcc-cs140-fall2018/Course-Information/wiki)
 to get started.
 
 Be sure that you fork the project first and use the URL from
@@ -20,7 +20,7 @@ based on the POSTNET encoding of zipcodes as barcodes.
 This class has two constructors, one that takes an integer, and one that takes a string.
 The constructor that takes an integer(specifically `uint32_t`) takes the integer to
 be a zipcode. For example, 93117. The constructor that takes a string takes the string
-to be a barcode representation of the zipcode, as described in the book.
+to be a barcode representation of the zipcode, as described in the book (for example `"010100001100001100011000110"`).
 
 In addition to the constructors, the Zipcode class should also include two methods, `getZipcode`
 , which returns the zipcode as an integer, and `getBarcode` which returns a string that represents
@@ -95,8 +95,7 @@ There are only three requirements for creating the code for this project correct
 be sure that you create a class named `Zipcode` in the namespace `edu::sbcc::cs140` with
 the give interface from above. Two, you can put your implementation in a file with the 
 name of your choice as long as it uses the `.cc` extension, and is in the `src` directory.
-Three, you can put you class definition in a file with the name of your choice as long as 
-it uses the `.h` extension, and is in the `include` directory.
+Three, you can put you class definition in a file called, exactly, `zipcode.h`, in the `include` directory.
 
 #### All files must have the header comment
 
@@ -128,7 +127,7 @@ Running main() from gtest_main.cc
 [       OK ] ZipcodeTest.UnderflowFormat (0 ms)
 [ RUN      ] ZipcodeTest.OnesNotAtStartAndEndFormat
 [       OK ] ZipcodeTest.OnesNotAtStartAndEndFormat (0 ms)
-Your unit test score is 22 out of 20 (2)
+Your unit test score is 20 out of 20 (0)
 The assignment is worth a total of 25 where the remaining points
 comes from grading related to documentation, algorithms, and other
 criteria.
@@ -142,22 +141,22 @@ criteria.
 Process finished with exit code 0
 ```
 
-Remember, red good, green bad. If your tests pass you should see green
-text and your code ran fine. You should also see your score for this
+You should also see your score for this
 assignment minus code styling points which I will add later.
 
 ### Submitting the code for this project
 
-At the bottom of CLion there should be a view tab labeled **Version Control**.
-Select this tab at the bottom of the screen. You should see a tab called **Local Changes**.
-Under **Unversion Files** you should have two files: `helloworld.cc` and `helloworld.h`.
-Select these files and right-click on them. In the drop-down menu
-select **Add to VCS**. Next, right-click on these files again, which should
-now be under **Default** and select **Commit**. Add the appropriate
-commit message and click **OK**. Finally, right click on the committed files,
-select `Git -> Repository -> Push...`. Follow the onscreen directions
+First, right click on the project name, then select `Git -> Commit Directory...`. 
+Make sure only the files you want to push are selected, `main.cc` `zipcode.cc` (or whatever you called it) and `zipcode.h`.
+Then uncheck `Perform code analysis` and `Check TODO`. It's OK to leave them checked,
+but committing will take longer. Leave `Run git hooks` checked. Put a message in `Commit Message`
+and then press the **Commit** button. If anything goes wrong check the _Version Control_ view
+in the lower left corner and select the _Console_ tab.
+ 
+Finally, right click on the project name,
+then select `Git -> Repository -> Push...`. Follow the onscreen directions
 and press **OK**. This step will run the tests again, check that everything is OK
 and then submit them to the cloud to have the tests run for grading.
 
 If you do not understand these directions, or wish to do them on the command
-line rather than in CLion, then read these [directions](https://github.com/sbcc-cs140-fall2018/HowToSubmitEveryProject).
+line rather than in CLion, then read these [directions](https://github.com/sbcc-cs140-fall2018/Course-Information/wiki/How-to-Turn-In-Every-Project).

@@ -1,7 +1,7 @@
 # Minimum version can be no higher than 3.5 as Ubuntu package management uses this version.
 cmake_minimum_required(VERSION 3.5)
 
-project (EX03-Zipcode)
+project (EX06-Zipcode)
 
 set(SOURCE_PREFIX "zipcode")
 set(EXEC_NAME "Zipcode")
