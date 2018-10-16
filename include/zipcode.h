@@ -8,21 +8,37 @@
 #include <cstdint>
 #include <string>
 
+using namespace std;
+
 namespace edu {
     namespace sbcc {
         namespace cs140 {
             class Zipcode {
             private:
+                uint32_t _zipcode = 0;
                 static const uint8_t ZERO_SUM;
-                //declaration
+                static const uint8_t BARCODE_VALUE[];
+                static const uint32_t ZIPDIGIT_MULT[];
+
+                uint8_t barcodeToZipDigit (string barcode,int groupIndex);
+                //converts 1 group of barcode digits to zip code digit
+                //value "groupIndex" starts at 0
+
+                uint32_t barcodeToZipcode(string barcode);
+                //converts a barcode into a zipcode
+
+                string zipcodeToBarcode(uint32_t zipcode);
+                //converts a zipcode into a barcode
+
             public:
-                int getZipcode (); //returns zipcode
-                std::string getBarcode (); //returns barcode
+                explicit Zipcode (u_int32_t zipcode);
+                explicit Zipcode (string barcode);
+                //takes zipcode in barcode format
+                uint32_t getZipcode (); //returns zipcode
+                string getBarcode (); //returns barcode representation of zipcode
             };
         }
     }
 }
-
-
 
 #endif //EX06_ZIPCODE_ZIPCODE_H
