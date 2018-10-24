@@ -55,17 +55,18 @@ namespace edu {
                 cout << "evaluating group index " << groupIndex << endl;
                 for (int i = groupIndex*5 + 1; i < groupIndex*5 + 6; i++ ,j++)
                 {
-                    cout << "'i' is: " << i << ". Barcode digit is: " << barcode[i] << endl;
-                    cout << "'j' is: " << j << ". Barcode_Value is: " << int(BARCODE_VALUE[j]) << endl;
+//                    cout << "'i' is: " << i << ". Barcode digit is: " << barcode[i] << endl;
+//                    cout << "'j' is: " << j << ". Barcode_Value is: " << (int)BARCODE_VALUE[j] << endl;
 //                    cout << "product is: " << stoi(&barcode[i]) * BARCODE_VALUE[j] << endl;
-                    string strconvert = &barcode[i];
-                    cout << "str convert is: " << strconvert << endl;
-                    sum += barcode[i] * BARCODE_VALUE[j];
-                    cout << "sum is: " << int(sum)<< endl;
+                    char barchar = barcode[i];
+                    int barint = barchar - '0'; //subtract ascii representation of 0
+//                    cout << "barint is: " << barint << endl;
+                    sum += barint * BARCODE_VALUE[j];
+//                    cout << "sum is: " << int(sum)<< endl;
                 }
                 if (sum == ZERO_SUM)
                     sum = 0;
-                cout << "the sum of groupIndex " << groupIndex << " is: " << int(sum) << endl;
+                cout << "the sum of groupIndex " << groupIndex << " is: " << (int)sum << endl;
                 return sum;
             }
 
@@ -76,20 +77,60 @@ namespace edu {
                 for (int i=0; i < 5; i++)
                 {
                     zipcode += ZIPDIGIT_MULT[i] * barcodeToZipDigit(barcode, i);
+                    cout << "_zipcode is now: " << zipcode << endl;
                 }
+                return zipcode;
             }
 
             uint32_t Zipcode::getZipcode() {
                 return _zipcode;
             }
 
-            string Zipcode::zipcodeToBarcode(uint32_t zipcode)
-            {
-                return "110100101000101011000010011"; //TODO: just a placeholder. implement bruh!
+            string Zipcode::zipcodeToBarcode(uint32_t zipcode) {
+                string barcode = "0000000000000000000000000";
+                string zipcodeStr = to_string(zipcode);
+
+                //now iterate through digits in string to convert
+                for (int i = 0; i < zipcodeStr.length(); i++)
+                    //iterate through each value of zipcode
+                {
+                    cout << "---------------------------------" << endl;
+                    int zipDigit = zipcodeStr[i] - '0';
+                    if (zipDigit == 0)
+                        zipDigit = ZERO_SUM;
+                    cout << "zipdigit starts at " << zipDigit << endl;
+                    int barcodeIndex = 5 * i;
+                    int numberOfTrue = 0;
+
+                    for (int j = 0; j < sizeof(BARCODE_VALUE); j++) {
+                        //run through each group of 5 barcode digits
+                        if (numberOfTrue == 2)
+                            break;
+                        if (zipDigit - BARCODE_VALUE[j] >= 0) {
+                            barcode[barcodeIndex + j] = '1';
+                            cout << "zipDigit difference for " << (int)BARCODE_VALUE[j] << " is " << zipDigit - BARCODE_VALUE[j] << endl;
+                            zipDigit = zipDigit - BARCODE_VALUE[j];
+                            cout << "Value of zipdigit is: " << zipDigit << endl;
+                            cout << endl;
+                            numberOfTrue = numberOfTrue + 1;
+                        } else
+                            barcode[barcodeIndex + j] = '0';
+                    }
+                    cout << "Barcode is now: " << barcode << " after group "<< i << endl;
+
+                    if (numberOfTrue > 2)
+                        cout << "Error! numberOfTrue is > 2" << endl;
+                }
+
+                cout << "--------------------------------------------" << endl;
+                cout << "barcode before insert/append is: " << barcode << endl;
+                barcode.insert(0, "1");
+                barcode.append("1");
+                return barcode;
             }
 
             string Zipcode::getBarcode() {
-                return zipcodeToBarcode(_zipcode);
+                return zipcodeToBarcode(_zipcode); //TODO: implement this!
             }
         }
     }
