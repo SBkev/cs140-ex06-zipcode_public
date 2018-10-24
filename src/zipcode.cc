@@ -74,11 +74,17 @@ namespace edu {
             {
                 cout << "executing barcodeToZipcode function" << endl;
                 uint32_t zipcode = 0;
+                string zipcodeStr = "00000"; //TODO: try to handle zipcode output of 00000
+
                 for (int i=0; i < 5; i++)
                 {
+//                    zipcodeStr[i] = 'barcodeToZipDigit(barcode, i)';
+//                    cout << "zipcode is now: " << zipcodeStr << endl;
                     zipcode += ZIPDIGIT_MULT[i] * barcodeToZipDigit(barcode, i);
-                    cout << "_zipcode is now: " << zipcode << endl;
+                    cout << "zipcode is now: " << zipcode << endl;
                 }
+//                zipcode = atoi(zipcodeStr.c_str());
+                cout << "Final zipcode is: " << zipcode << endl;
                 return zipcode;
             }
 
