@@ -19,7 +19,7 @@ namespace edu {
                 static const uint8_t ZERO_SUM;
                 static const uint8_t BARCODE_VALUE[];
                 static const uint32_t ZIPDIGIT_MULT[];
-                static const string NULL_ZIP;
+                static const string NULL_BARCODE;
 
                 uint8_t barcodeToZipDigit (string barcode,int groupIndex);
                 //converts 1 group of barcode digits to zip code digit
