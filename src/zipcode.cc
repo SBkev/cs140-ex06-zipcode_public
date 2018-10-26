@@ -18,31 +18,33 @@ using namespace std;
 namespace edu {
     namespace sbcc {
         namespace cs140 {
+
             const uint8_t Zipcode::ZERO_SUM = 11;
+            const string Zipcode:: NULL_ZIP = "111000110001100011000110001";
+            // "000000000000000000000000000"
             const uint8_t Zipcode::BARCODE_VALUE[] = {7, 4, 2, 1, 0}; //values represented by bar code digits
             const uint32_t Zipcode::ZIPDIGIT_MULT[] = {10000, 1000, 100, 10, 1}; //multiplier for concatenating zipcode from zipdigit
 
             Zipcode::Zipcode(string barcode)
             {
                 cout << "executing barcode constructor" << endl;
-                if (barcode[0] != '1')
-                {
+
+                if (barcode[0] != '1') {
                     cout << "Error. First barcode digit must be 1! First digit is: " << barcode[0] << endl;
-                    return;
+                    barcode = NULL_ZIP;
                 }
-                else if (barcode[barcode.length()-1] != '1')
-                {
+                else if (barcode[barcode.length()-1] != '1') {
                     cout << "Error. Last barcode digit must be 1!" << endl;
-                    return;
+                    barcode = NULL_ZIP;
                 }
-                else if (barcode.length() != 27)
-                {
+                else if (barcode.length() != 27) {
                     cout << "Error. Barcode length is not 27!" << endl;
-                    return;
+                    barcode = NULL_ZIP;
                 }
                 else
                     _zipcode = barcodeToZipcode(barcode);
             }
+
             Zipcode::Zipcode(u_int32_t zipcode) {
                 cout << "executing zipcode constructor" << endl;
                 _zipcode = zipcode;
@@ -56,15 +58,11 @@ namespace edu {
                 cout << "evaluating group index " << groupIndex << endl;
                 for (int i = groupIndex*5 + 1; i < groupIndex*5 + 6; i++ ,j++)
                 {
-//                    cout << "'i' is: " << i << ". Barcode digit is: " << barcode[i] << endl;
-//                    cout << "'j' is: " << j << ". Barcode_Value is: " << (int)BARCODE_VALUE[j] << endl;
-//                    cout << "product is: " << stoi(&barcode[i]) * BARCODE_VALUE[j] << endl;
                     char barchar = barcode[i];
                     int barint = barchar - '0'; //subtract ascii representation of 0
-//                    cout << "barint is: " << barint << endl;
                     sum += barint * BARCODE_VALUE[j];
-//                    cout << "sum is: " << int(sum)<< endl;
                 }
+
                 if (sum == ZERO_SUM)
                     sum = 0;
                 cout << "the sum of groupIndex " << groupIndex << " is: " << (int)sum << endl;
@@ -75,7 +73,9 @@ namespace edu {
             {
                 cout << "executing barcodeToZipcode function" << endl;
                 uint32_t zipcode = 0;
-                string zipcodeStr = "00000"; //TODO: try to handle zipcode output of 00000
+//                string zipcodeStr = "00000"; //TODO: try to handle zipcode output of 00000
+                if (barcode == "000000000000000000000000000")
+                    return zipcode;
 
                 for (int i=0; i < 5; i++)
                 {
@@ -94,7 +94,9 @@ namespace edu {
             }
 
             string Zipcode::zipcodeToBarcode(uint32_t zipcode) {
-                string barcode = "0000000000000000000000000";
+                string barcode = "0000000000000000000000000"; //kind of a magic string here. would be better to start with NULL_ZIP, however rest of code depends on appending '1' values at end of code
+                if (zipcode == 0)
+                    return NULL_ZIP;
                 string zipcodeStr = to_string(zipcode);
 
                 //now iterate through digits in string to convert

@@ -20,4 +20,12 @@ int main (){
         cout << "barcode and barcodeCalculated match! Good job kev";
     else
         cout << "Oh no! barcode and barcodeCalculated don't match. Try again";
+
+//string barcode = "101010101011100";
+//char barchar = barcode[1];
+//int barint = barchar - '0';
+//cout << "barint = " << barint << endl;
+//string barcodestr = "111111111111111111111111111";
+//cout << "length is: " << barcodestr.length() << endl;
+
 }
